@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    @apply
+    bg-gray-200
+    font-mono
+}
+
+section{
+    @apply
+    py-5
+    my-5
+}
+
+.wrapper{
+    @apply
+    sm:container
+    mx-auto
+}
+
+.cards-wrapper{
+    @apply
+    flex
+    flex-wrap
+    justify-center
+}
+
+.card{
+    @apply
+    w-5/6
+    md:w-2/5
+    lg:w-1/3
+    xl:w-1/5
+    shadow-md
+    mx-4
+    mb-8
+    rounded-xl
+}
+
+.card figure{
+    @apply
+    flex
+    justify-center
+    items-center
+    max-h-48
+    overflow-hidden
+    rounded-t-xl
+}
+
+.card figure img{
+    min-height: 12rem;
+    @apply
+    w-full
+    object-cover
+}
+
+.card-content {
+    @apply
+    flex
+    flex-col
+    flex-wrap
+    justify-between
+    relative
+    h-60
+    bg-white
+    rounded-b-xl
+    p-4
+}
+
+.card-content h3 {
+    @apply
+    pb-1
+    text-lg
+    font-bold
+}
+
+.card-content p {
+    @apply
+    text-xs
+    text-neutral-600
+    py-2
+}
+
+.card-content .card-action .price {
+    @apply
+    flex
+    w-1/2
+    items-center
+    py-1
+}
+
+.card-content .card-action .price span:nth-child(1) {
+    @apply
+    text-base
+    mr-3
+}
+
+.card-content .card-action .price span:nth-child(2) {
+    @apply
+    opacity-70
+    text-sm
+}
+
+.card-content .card-action {
+    @apply
+    flex
+    pt-2
+}
+
+.card-content .card-action .action-btn {
+    @apply
+    flex
+    w-1/2
+    justify-end
+}
+
+.card-content .card-action .action-btn button {
+    @apply
+    w-3/4
+    bg-green-400
+    text-white
+    text-xs
+    rounded-sm
+    tracking-wider
+    px-4
+
+}
