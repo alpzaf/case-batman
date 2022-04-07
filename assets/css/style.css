@@ -563,7 +563,11 @@ section {
 .card-content p {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  font-size: 0.75rem;
+  font-size: 4.75rem;
+  font-weight: 900;
+  opacity: .5;
+  width:fit-content;
+  margin:0 auto;
   line-height: 1rem;
   --tw-text-opacity: 1;
   color: rgb(82 82 82 / var(--tw-text-opacity));

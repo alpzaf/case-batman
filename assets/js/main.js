@@ -17,69 +17,93 @@ const fetchGames = async () => {
   }
 }
 
-// TODO:  COMPARISON FUNCTION
-const comparison = async () => {
+// PROVIDER FUNCTION
+// Bir karşılaştırma fonksiyonu yazamadım.
+// API dökümantasyonunda deals arrayinin default da
+// fiyatı artan olarak sıralandığını öğrendim.
+// O yüzden ilk değeri en ucuz deal olarak belirledim.
+const provider = async () => {
+  const games = await fetchGames().then(data => data)
   let deals = []
   let prices = []
-  let games = await fetchGames().then(data => data)
-  games.map(item => {
-    deals.push(item.deals)
-  })
-  console.log(deals[3][4].price);
-  minValue(deals[3][4])
-  
+  let retailPrices = []
+  let thumbs = []
+  let titles = []
+
+  games.map(item => {deals.push(item.deals)})
+
   for (let i = 0; i < deals.length; i++) {
-    for (let j = 0; j < deals[i].length; j++) {
-      
-    }
+    prices.push(deals[i][0].price)
+    retailPrices.push(deals[i][0].retailPrice)
   }
-}
 
-const minValue = (arr) => {
-  return Math.min(arr)
-}
+  for (let i = 0; i < games.length; i++) {
+    thumbs.push(games[i].info.thumb)
+    titles.push(games[i].info.title)
+  }
 
+  return [
+    prices,
+    retailPrices,
+    thumbs,
+    titles
+  ]
+}
 
 // SALE RATIO CALCULATION FUNCTION
 const percentage = (retailPrice,salePrice) => {
-  if(retailPrice,salePrice === Number && retailPrice,salePrice !== 0 && retailPrice,salePrice !== undefined && retailPrice > salePrice) {
-    return (retailPrice - salePrice) / retailPrice * 100
+  if(retailPrice,salePrice != 0 && retailPrice,salePrice !== undefined) {
+    let result = (retailPrice - salePrice) / retailPrice * 100
+    return result.toFixed(0)
   } else {
     throw new Error('Check The Given Parameters')
   }
 }
 
-
-// TODO:  RENDER FUNCTION
-const template = (thumb,name,cheapestPrice,retailPrice,saleRatio) => {
-    return `
-    <div class="card">
-      <figure>
-          <img src="${thumb}" alt="${name}">
-      </figure>
-      <div class="card-content">
-        <h3>
-          ${name}
-        </h3>
-        <p>
-            ${saleRatio}
-        </p>
-        <div class="card-action">
-            <div class="price">
-                <span>
-                  $${cheapestPrice === undefined ? retailPrice : cheapestPrice}
-                </span>
-                <span>
-                  <del>
-                    ${cheapestPrice === undefined ? '' : '$' + retailPrice}
-                  </del>
-                </span>
-            </div>
-            <div class="action-btn">
-                <button>ORDER</button>
-            </div>
-        </div>
-      </div>
-    </div>
-  `
+// RENDER FUNCTION
+const renderer = async () => {
+  const data = await provider().then(resp => resp)
+  let wrapper = document.querySelector('.cards-wrapper')
+  
+  for (let i = 0; i < data.length; i++) {
+    for (let j = 0; j < data[i].length; j++) {
+      wrapper.innerHTML += template(data[2][j],data[3][j],data[0][j],data[1][j])
+    }
+  }
 }
+
+// TEMPLATE FUNCTION
+const template = (thumb,title,price,retailPrice) => {
+   return `
+     <div class="card">
+       <figure>
+           <img src="${thumb}" alt="${title}">
+       </figure>
+       <div class="card-content">
+         <h3>
+           ${title}
+         </h3>
+         <p>
+            %${percentage(retailPrice,price)}
+         </p>
+         <div class="card-action">
+             <div class="price">
+                 <span>
+                   $${price}
+                 </span>
+                 <span>
+                   <del>
+                     ${retailPrice}
+                   </del>
+                 </span>
+             </div>
+             <div class="action-btn">
+                 <button>ORDER</button>
+             </div>
+         </div>
+       </div>
+     </div>
+   `
+}
+
+renderer()
