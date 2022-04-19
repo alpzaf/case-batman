@@ -18,10 +18,6 @@ const fetchGames = async () => {
 }
 
 // PROVIDER FUNCTION
-// Bir karşılaştırma fonksiyonu yazamadım.
-// API dökümantasyonunda deals arrayinin default da
-// fiyatı artan olarak sıralandığını öğrendim.
-// O yüzden ilk değeri en ucuz deal olarak belirledim.
 const provider = async () => {
   const games = await fetchGames().then(data => data)
   let deals = []
